@@ -9,8 +9,8 @@ Build our own list representation using an algebraic data type (ADT)
 module Lets.Data where
 
 data List a = Nil | Cons a (List a)
-            deriving (Eq, Ord, Show, Read)
-            -- deriving (Eq,Ord,Read) -- own show!
+            -- deriving (Eq, Ord, Show, Read)
+            deriving (Eq,Ord,Read) -- own show!
 
 
 --
@@ -21,40 +21,6 @@ data List a = Nil | Cons a (List a)
 --
 -- >>> :t Cons
 -- >>> Cons :: a -> List a -> List a
---
-
-
---
--- Some sample lists
---
-
- -- int lists
-il1 = toList [1..10]
-il2 = toList [11..20]
--- >>> :t il1
--- >>> il1 :: List Integer
-
--- string lists
-sl1 = toList (words "hello world")
-sl2 = toList (words "this is a test")
-sl3 = toList (words "to be or not to be")
--- >>> :t sl1
--- >>> sl1 :: List String
-
--- string of string list !
-sosl = toList [sl1, sl2, sl3]
--- >>> :t sosl
--- >>> sosl :: List (List String)
-
-
-
---
--- instancing a typeclass
---
-
--- instance Show a => Show (List a) where
---   show Nil = "👍" ++ " "
---   show (Cons a as) = show a ++ " : " ++ show as
 --
 
 
@@ -87,6 +53,41 @@ fromList Nil = []
 fromList (Cons a as) = a : (fromList as)
 
 
+
+--
+-- Some sample lists
+--
+
+ -- int lists
+il1 = toList [1..10]
+il2 = toList [11..20]
+-- >>> :t il1
+-- >>> il1 :: List Integer
+
+-- string lists
+sl1 = toList (words "hello world")
+sl2 = toList (words "this is a test")
+sl3 = toList (words "to be or not to be")
+-- >>> :t sl1
+-- >>> sl1 :: List String
+
+-- string of string list !
+sosl = toList [sl1, sl2, sl3]
+-- >>> :t sosl
+-- >>> sosl :: List (List String)
+
+
+
+--
+-- instancing a typeclass
+--
+
+instance Show a => Show (List a) where
+  show Nil = "👍" ++ " "
+  show (Cons a as) = show a ++ " : " ++ show as
+
+
+
 --
 -- higher order functions
 --
@@ -113,7 +114,7 @@ concatL (Cons l ls) = appendL l (concatL ls)
 
 filterL :: (a -> Bool) -> List a -> List a
 -- filterL = undefined
-filterL p (Nil) = Nil
+filterL _ (Nil) = Nil
 filterL p (Cons a as) = if (p a) then (Cons a (filterL p as)) else (filterL p as)
 
 foldrL :: (a -> b -> b) -> b -> List a -> b
