@@ -1,7 +1,7 @@
 name:                lets-haskell
 version:             0.1.0.0
 synopsis:            Source code for an introductory Haskell course
-description:         Source code and exercises for an introductory course on Haskell and functional programming concepts.
+description:         Source code and exercises for an introductory course on Haskell and functional programming.
 homepage:            http://github.com/peterson/lets-haskell
 license:             BSD3
 license-file:        LICENSE

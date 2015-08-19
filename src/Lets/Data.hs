@@ -9,8 +9,8 @@ Build our own list representation using an algebraic data type (ADT)
 module Lets.Data where
 
 data List a = Nil | Cons a (List a)
-            -- deriving (Eq, Ord, Show, Read)
-            deriving (Eq,Ord,Read) -- own show!
+            deriving (Eq, Ord, Show, Read)
+            -- deriving (Eq,Ord,Read) -- own show!
 
 
 --
