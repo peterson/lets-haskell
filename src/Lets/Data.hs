@@ -2,7 +2,7 @@
 
 Lets.Data
 
-Build our own list representation using an algebraic data type (ADT)
+Build our own list representation using an algebraic data type (ADT).
 
 -}
 
@@ -30,25 +30,21 @@ data List a = Nil | Cons a (List a)
 
 -- empty returns an empty list
 empty :: List a
--- empty = undefined
 empty = Nil
 
 -- singleton builds a list around a value
 singleton :: a -> List a
--- singleton = undefined
 singleton v = Cons v Nil
 
 
 -- toList takes an in-built list to our List type
 toList :: [a] -> List a
--- toList = undefined
 toList []     = Nil
 toList (a:as) = Cons a (toList as)
 
 
 -- fromL takes our List type to an in-built list
 fromList :: List a -> [a]
--- fromL = undefined
 fromList Nil = []
 fromList (Cons a as) = a : (fromList as)
 
@@ -93,13 +89,11 @@ instance Show a => Show (List a) where
 --
 
 mapL :: (a -> a) -> List a -> List a
--- mapL = undefined
 mapL f (Nil) = Nil
 mapL f (Cons a as) = Cons (f a) (mapL f as)
 
 
 appendL :: List a -> List a -> List a
--- appendL = undefined
 appendL Nil Nil = Nil
 appendL l1 Nil = l1
 appendL Nil l2 = l2
@@ -107,29 +101,25 @@ appendL (Cons l1 l1s) l2 = Cons l1 (appendL l1s l2)
 
 
 concatL :: List (List a) -> List a
--- concatL = undefined
 concatL Nil = Nil
 concatL (Cons l ls) = appendL l (concatL ls)
 
 
 filterL :: (a -> Bool) -> List a -> List a
--- filterL = undefined
 filterL _ (Nil) = Nil
 filterL p (Cons a as) = if (p a) then (Cons a (filterL p as)) else (filterL p as)
 
 foldrL :: (a -> b -> b) -> b -> List a -> b
--- foldrL = undefined
 foldrL f z (Nil) = z
 foldrL f z (Cons a as) = f a (foldrL f z as)
 
-
--- sumL = undefined
+-- sum of list elements
 sumL = foldrL (+) 0
 
--- prodL = undefined
+-- product of list elements
 prodL = foldrL (*) 1
 
--- idL = undefined
+-- identity
 idL = foldrL Cons Nil -- this is the identity function on List!
 
 
