@@ -1,0 +1,57 @@
+name:                lets-haskell
+version:             0.1.0.0
+synopsis:            Source code for an introductory Haskell course
+description:         Source code and exercises for an introductory course on Haskell and functional programming concepts.
+homepage:            http://github.com/peterson/lets-haskell
+license:             BSD3
+license-file:        LICENSE
+author:              David Peterson
+maintainer:          dhpeterson@gmail.com
+copyright:           Copyright 2015 David Peterson.
+category:            Education
+build-type:          Custom
+-- extra-source-files:
+cabal-version:       >=1.10
+
+source-repository head
+  type:                git
+  location:            git://github.com/peterson/lets-haskell.git
+
+
+library
+  exposed-modules:     Lets.Curry,
+                       Lets.Data,
+                       Lets.Function,
+                       Lets.Go,
+                       Lets.List,
+                       Lets.Map,
+                       Lets.Match,
+                       Lets.Prelude,
+                       Lets.QuickCheck,
+                       Lets.Recurse,
+                       Lets.Tuple,
+                       Now.TFN
+  -- other-modules:
+  -- other-extensions:
+  build-depends:       base >=4.8 && <4.9,
+                       memoize >= 0.7,
+                       primes >= 0.2,
+                       QuickCheck >= 2.0
+
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+
+
+test-suite tests
+  type:                exitcode-stdio-1.0
+
+  build-depends:       base >=4.8 && <4.9,
+                       QuickCheck >= 2.0,
+                       test-framework >= 0.4,
+                       test-framework-quickcheck2 >= 0.2.0,
+                       lets-haskell
+
+  hs-source-dirs:      tests
+  ghc-options:         -Wall -threaded
+  main-is:             Main.hs
+  default-language:    Haskell2010
