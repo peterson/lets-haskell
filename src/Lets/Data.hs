@@ -55,22 +55,25 @@ fromList (Cons a as) = a : (fromList as)
 --
 
  -- int lists
+il1 :: List Integer
 il1 = toList [1..10]
+
+il2 :: List Integer
 il2 = toList [11..20]
--- >>> :t il1
--- >>> il1 :: List Integer
 
 -- string lists
+sl1 :: List String
 sl1 = toList (words "hello world")
+
+sl2 :: List String
 sl2 = toList (words "this is a test")
+
+sl3 :: List String
 sl3 = toList (words "to be or not to be")
--- >>> :t sl1
--- >>> sl1 :: List String
 
 -- string of string list !
+sosl :: List (List String)
 sosl = toList [sl1, sl2, sl3]
--- >>> :t sosl
--- >>> sosl :: List (List String)
 
 
 
@@ -89,7 +92,7 @@ instance Show a => Show (List a) where
 --
 
 mapL :: (a -> a) -> List a -> List a
-mapL f (Nil) = Nil
+mapL _ (Nil) = Nil
 mapL f (Cons a as) = Cons (f a) (mapL f as)
 
 
@@ -110,16 +113,19 @@ filterL _ (Nil) = Nil
 filterL p (Cons a as) = if (p a) then (Cons a (filterL p as)) else (filterL p as)
 
 foldrL :: (a -> b -> b) -> b -> List a -> b
-foldrL f z (Nil) = z
+foldrL _ z (Nil) = z
 foldrL f z (Cons a as) = f a (foldrL f z as)
 
 -- sum of list elements
+sumL :: List Integer -> Integer
 sumL = foldrL (+) 0
 
 -- product of list elements
+prodL :: List Integer -> Integer
 prodL = foldrL (*) 1
 
 -- identity
+idL :: List a -> List a
 idL = foldrL Cons Nil -- this is the identity function on List!
 
 
@@ -128,22 +134,25 @@ idL = foldrL Cons Nil -- this is the identity function on List!
 --
 
 -- map
+mapL' :: (a -> b) -> List a -> List b
 mapL' f = foldrL (Cons . f) Nil
 --                ^^^^^^^^ => "f, then Cons"
 
 -- alternatively, we can write it this way ...
 
 -- define a "then" operator, |>
+(|>) :: (a -> b) -> (b -> c) -> a -> c
 (|>) = flip (.)
--- >>> :t (|>)
--- >>> (|>) :: (a -> b) -> (b -> c) -> a -> c
 
 -- now, define map using |>
+mapL'' :: (a -> b) -> List a -> List b
 mapL'' f = foldrL (f |> Cons) Nil
 --                 ^^^^^^^^^ => "f then Cons"
 
 -- filter
+filterL' :: (a -> Bool) -> List a -> List a
 filterL' p = foldrL (\x xs -> if p x then (Cons x xs) else xs) Nil
 
 -- concat
+concatL' :: List (List a) -> List a
 concatL' = foldrL (appendL) Nil

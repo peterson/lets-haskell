@@ -34,7 +34,6 @@ library
   -- other-modules:
   -- other-extensions:
   build-depends:       base >=4.8 && <4.9,
-                       memoize >= 0.7,
                        primes >= 0.2,
                        QuickCheck >= 2.0
 
