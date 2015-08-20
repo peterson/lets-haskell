@@ -91,7 +91,7 @@ instance Show a => Show (List a) where
 -- higher order functions
 --
 
-mapL :: (a -> a) -> List a -> List a
+mapL :: (a -> b) -> List a -> List b
 mapL _ (Nil) = Nil
 mapL f (Cons a as) = Cons (f a) (mapL f as)
 

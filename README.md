@@ -45,104 +45,16 @@ Day 1:
 * `Lets.Go` - ops, basic types, to/from digits, div, mod, min, max ... etc.
 * `Lets.Function`
 * `Lets.List`
-* `Lets.Match`
-* `Lets.Tuple`
-* `Lets.Curry`
-* `Lets.Recurse`
-* `Lets.Lambda`
-* `Lets.Map`
-* `Lets.Filter`
-* `Now.TFN` - Build a simple validator and generator for tax file numbers (TFNs)
-
-* `Lets.Record`
 * `Lets.Data`
-* `Now.Tree` - Build a simple tree structure in Haskell
-
+* (more) coming soon ...
 
 Day 2:
 
-* `Lets.Type`
-* `Lets.Parametrise`
-* `Lets.Typeclass`
-* `Lets.Functor` (n.b. show DeriveFunctor for Tree)
-* `Now.Calc`
-
-* `Lets.Fold`
-* `Lets.Unfold`
-* `Now.Something`
-
-* `Lets.IO`
-* `Lets.CommandLine`
-* `Lets.File`
-* `Now.Something`
-
-* `Lets.Prelude`
-* `Lets.HLint`
-* `Lets.Haddock`
-* `Lets.HUnit`
-* `Lets.QuickCheck`
-
+* coming soon ...
 
 Day 3:
 
-* `Lets.Applicative` ?
-* `Lets.Monoid` ?
-* `Lets.WarmFuzzyThing` :)
-* `Lets.Desugar`
-* `Lets.Lift`
-* `Now.CommandLine`
-
-* `Lets.Maybe`
-* `Lets.Either`
-* `Lets.Error`
-* `Lets.State`
-* `Now.Parse` -- not sure if I want to do a parsing tutorial, but what else for M's?
-
-* `Lets.MTL` - ReaderT, WriterT, StateT
-
-
-GADTs:
-
-* `Lets.GADT`
-
-Containers:
-
-* `Lets.Data.Set`
-* `Lets.Data.Map`
-* `Lets.Data.Sequence`
-* `Lets.Data.Tree`
-
-Parallel & concurrent programming with mutable state:
-* `Lets.Mutate`
-* `Lets.MVar`
-* `Lets.IORef`
-* `Lets.Async` (concurrency)
-* `Lets.STM`
-* `Now.DoSomethingConcurrently`
-
-Network programming:
-
-* `Lets.Network` - basic network code
-* `Lets.Echo`
-* `Now.Chat.Client` - tour the chat client
-* `Now.Chat.Server` (participants build a simple chat-server) c1 - !S! - c2
-* `Now.Chat.P2P` (participants build P2P chat) !C1! <-> !C2! <-> !C3! etc
-
-Distributed computing:
-
-* `Lets.Distribute` - introduction to Cloud Haskell
-* `Now.SomethingDistributed`
-
-Demos of useful packages:
-
-* `Try.Containers` - intro to Data.Map, Data.Sequence, Data.Set, Data.Tree
-* `Try.Parsers` (parsec, attoparsec, polyparse)
-* `Try.Diagrams`
-* `Try.LensFamily` - an introduction to the (simpler) lens family package
-* `Try.HLearn`
-* `Try.Snap` or `Try.Yesod` or `Try.Servant`
-* FRP?
-
+* coming soon ...
 
 Answers to the exercises can be found on the answers branch, here:
 [https://github.com/peterson/lets-data/tree/answers](https://github.com/peterson/lets-data/tree/answers)

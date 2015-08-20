@@ -19,18 +19,10 @@ source-repository head
 
 
 library
-  exposed-modules:     Lets.Curry,
-                       Lets.Data,
+  exposed-modules:     Lets.Data,
                        Lets.Function,
                        Lets.Go,
-                       Lets.List,
-                       Lets.Map,
-                       Lets.Match,
-                       Lets.Prelude,
-                       Lets.QuickCheck,
-                       Lets.Recurse,
-                       Lets.Tuple,
-                       Now.TFN
+                       Lets.List
   -- other-modules:
   -- other-extensions:
   build-depends:       base >=4.8 && <4.9,
