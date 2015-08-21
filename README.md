@@ -46,6 +46,7 @@ Day 1:
 * `Lets.Function`
 * `Lets.List`
 * `Lets.Data`
+* `Lets.Functor` - functors and applicative functors
 * (more) coming soon ...
 
 Day 2:
