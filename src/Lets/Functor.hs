@@ -52,6 +52,12 @@ concatL :: List (List a) -> List a
 concatL Nil = Nil
 concatL (Cons l ls) = appendL l (concatL ls)
 
+--
+-- plus one more function we didn't have previously, but now add ...
+--
+-- map then concat
+concatMapL :: (a -> List b) -> List a -> List b
+concatMapL f = concatL . (fmap f)
 
 -----------------------------------------------------------
 
@@ -90,23 +96,22 @@ numL = toList [1..5]
 
 
 
-
 {-
 
 Applicatives (or, applicative functors)
 
 -}
 
-
-
--- map then concat
-concatMapL :: (a -> List b) -> List a -> List b
-concatMapL f = concatL . (fmap f)
-
-
 instance Applicative List where
   pure = singleton
-  f <*> a = concatMapL (\g -> fmap g a) f
+
+  -- we can define <*> using pattern matching and appendL ...
+  (Cons f fs) <*> as = appendL (f <$> as) (fs <*> as)
+  (Nil)       <*> as = Nil
+
+  -- alternatively, we can define more compactly, using concatMapL ...
+  -- f <*> a = concatMapL (\g -> fmap g a) f
+
 
 -- what is the type signature for applicatives?
 -- ap :: f (a -> b) -> f a -> f b
