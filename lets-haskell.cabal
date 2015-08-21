@@ -21,6 +21,7 @@ source-repository head
 library
   exposed-modules:     Lets.Data,
                        Lets.Function,
+                       Lets.Functor,
                        Lets.Go,
                        Lets.List
   -- other-modules:
