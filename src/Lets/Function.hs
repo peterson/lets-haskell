@@ -70,8 +70,6 @@ circleA r = 1/2 * 𝜏 * r * r
 
 Functions are first-class values! You can pass them to other functions, etc.
 
-* example of passing a fn to another fn ...
-
 -}
 
 
@@ -96,5 +94,31 @@ and so on!
 -}
 
 -- In the definition of double (above), "+" is a function. We can make this
--- explicit by moving it to infix position:
+-- explicit by brackting it, and moving it to infix position:
 double' x = (+) x x
+
+
+
+{-
+
+Combining functions
+
+-}
+
+-- (.) is the function composition operator (which is itself a function!)
+--
+-- >>> :t (.)
+-- >>>
+
+
+-- flip
+--
+-- flip changes the order of arguments to a function
+--
+-- >>> :t flip
+--
+-- we can use this to change the order of the function composition
+-- function (.)
+--
+-- >>> :t flip (.)
+-- >>>
