@@ -138,3 +138,85 @@ boolL  = toList [odd, even]
 -- >>> boolL <*> numL
 -- >>> True : False : True : False : True : False : True : False : True : False : 👍
 --                                    >>> | <<<                             >>> | <<<
+
+
+
+{-
+
+Fuzzy's (... Monads!)
+
+-}
+
+
+-- First, let's review "list comprehensions" ...
+
+listcomp :: [ (Integer,Integer) ]
+listcomp = [(i,j) | i <- [1..3], j <- [i+1..i+3] ]
+
+
+--
+-- Doing this using in-built lists (i.e. [1,2,3] ) ..
+
+sugared :: [ (Integer,Integer) ]
+sugared = do
+  i <- [1..3]
+  j <- [i+1..i+3]
+  return (i,j)
+
+desugared :: [ (Integer,Integer) ]
+desugared =
+  [1..3] >>= \i ->
+    [i+1..i+3] >>= \j ->
+      return (i,j)
+
+
+--
+-- using Fuzzy's
+
+class Fuzzy m where
+  (~~>) :: m a -> (a -> m b) -> m b -- fuzz
+  ret   :: a -> m a
+
+
+instance Fuzzy List where
+  (~~>) = bindL
+  ret   = singleton
+
+
+bindL :: List a -> (a -> List b) -> List b
+bindL = flip concatMapL
+
+--- doing this using Fuzzy's and our List ...
+desugaredFuzzy :: List (Integer, Integer)
+desugaredFuzzy =
+  toList [1..3] ~~> \i ->
+    toList [i+1..i+3] ~~> \j ->
+      ret (i,j)
+
+
+--
+-- now, doing this using (ooh, scary!) ... Monads!
+
+instance Monad List where
+  (>>=)  = bindL
+  return = singleton
+
+-- note the functions used (bindL and singleton) are the SAME as for Fuzzy!
+
+
+-- doing this using our newly-defined Monad for List
+desugaredMonad =
+  toList [1..3] >>= \i ->
+    toList [i+1..i+3] >>= \j ->
+      return (i,j)
+
+
+-- Conclusions:
+--
+-- 1. A Monad is just a different name for a Fuzzy!
+-- 2. (>>=), or "bind", is exactly the same as (~~>), or "fuzz"
+-- 3. (>>=), or "bind", is basically just an "and-then" operator
+-- 4. Monads provide a context that allows for greater control over execution, in which
+-- values may be 'passed down' the monadic chain, using the (>>=), or "bind", operator.
+
+-- There's a tiny bit more to it, e.g. (>>) for example, but essentially that's it!

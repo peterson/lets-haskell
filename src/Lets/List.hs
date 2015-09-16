@@ -75,6 +75,24 @@ safefirstL (x:_) = Just x
 -- head, tail, length, etc ...
 -- ... look at the types!
 
+
+{-
+
+  List operations
+
+-}
+
+-- length
+--
+-- >>> :t length
+-- >>> length intL3
+
+-- append
+--
+-- >>> :t (++)
+-- >>> intL1 ++ intL3
+
+
 {-
 -- Text
 -}
@@ -96,7 +114,7 @@ text = "Haskell Brooks Curry (September 12, 1900 - September 1, 1982) \
 
 {-
 
-  Wordcount
+Example: Wordcount
 
 -}
 
