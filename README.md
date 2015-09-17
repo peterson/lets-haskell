@@ -46,7 +46,8 @@ Day 1:
 * `Lets.Function`
 * `Lets.List`
 * `Lets.Data`
-* `Lets.Functor` - functors and applicative functors
+* `Lets.TouchFeelyFuzzy` - a warm-up exercise for functors, applicatives, etc.
+* `Lets.Functor` - functors, applicatives and monads.
 * (more) coming soon ...
 
 Day 2:

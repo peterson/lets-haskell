@@ -1,4 +1,4 @@
-module Lets.TouchyFeelyFuzzyScary where
+module Lets.TouchyFeelyFuzzy where
 
 {-
   Typeclasses ...

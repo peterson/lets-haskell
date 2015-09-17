@@ -23,7 +23,7 @@ library
                        Lets.Function,
                        Lets.Functor,
                        Lets.Go,
-                       Lets.TouchyFeelyFuzzyScary,
+                       Lets.TouchyFeelyFuzzy,
                        Lets.List
   -- other-modules:
   -- other-extensions:
