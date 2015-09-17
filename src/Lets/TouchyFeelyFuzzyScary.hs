@@ -1,8 +1,5 @@
 module Lets.TouchyFeelyFuzzyScary where
 
-import Control.Applicative ((<*>))
-
-
 {-
   Typeclasses ...
 -}
@@ -125,7 +122,7 @@ fuzzy = flip touchysqueezy
 -- note: ~~> is supposed to look like a scary finger! :)
 
 --
--- Examples:
+-- Example: List monad
 --
 
 --
