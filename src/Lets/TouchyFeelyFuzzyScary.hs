@@ -13,17 +13,17 @@ class Touchy t where
 
 class Feely f where
   (<~>) :: f (a -> b) -> f a -> f b -- feely
-  (~^)  :: a -> f a -- wrap / pure / return
+  (~^)  :: a -> f a -- grabby
 
 
 class Fuzzy z where
   (~~>) :: z a -> (a -> z b) -> z b -- fuzzy
-  (^~^) :: a -> z a -- wrap / lift / pure / return
+  (^~^) :: a -> z a -- grabby
 
 
 {-
 
-  Touchy ... a.k.a. "Functor"
+  Touchy ... a.k.a. Functor
 
 -}
 
@@ -36,7 +36,8 @@ touchy f (a:as) = (f a) : (touchy f as)
 -- touchy is just "map"! ... i.e. recursively apply f to each a in the list!
 -- We call it "touchy" because it "touches" each element a in as with f,
 -- i.e. f ~> as ... (equivalent to "map f as", or f <$> as)
--- btw: ~> is supposed to look like a finger!
+
+-- note: ~> is supposed to look like a finger!
 
 -- Examples:
 --
@@ -50,7 +51,7 @@ touchy f (a:as) = (f a) : (touchy f as)
 
 {-
 
-  Feely ... a.k.a. "Applicative"
+  Feely ... a.k.a. Applicative
 
 -}
 
@@ -74,7 +75,9 @@ feely (f:fs) as = (f ~> as) ++ feely fs as
 -- So essentially this recursively builds a flattened list of the results of applying
 -- each f in fs to each a in as! (feely handles the recursion over fs, and calls
 -- touchy (~>), defined above, which handles the recursion over as!)
--- btw: <~> is supposed to look like two fingers, or a bi-directional finger, perhaps!
+
+-- note: <~> is supposed to look like a "two-way" finger, perhaps (as it's "touching"
+-- both sides, i.e. both arguments, not just one side.)
 
 -- Examples:
 --
@@ -87,7 +90,7 @@ feely (f:fs) as = (f ~> as) ++ feely fs as
 
 {-
 
-  Fuzzy ... a.k.a. "Monad" (ooh, scary!)
+  Fuzzy ... a.k.a. Monad (ooh, scary!)
 
 -}
 
@@ -118,7 +121,8 @@ fuzzy = flip touchysqueezy
 -- with fuzzy, we have a function of the form input_list -> function -> output_list
 -- ... this is very handy for "threading" the output of one fuzzy to the input of
 -- a subsequent fuzzy!
--- btw: ~~> is supposed to like like a scary finger! :)
+
+-- note: ~~> is supposed to look like a scary finger! :)
 
 --
 -- Examples:
@@ -132,7 +136,7 @@ listily = [ (i,j) | i <- [1..3], j <- [i+2..i+4] ]
 -- >>> [(1,3),(1,4),(1,5),(2,4),(2,5),(2,6),(3,5),(3,6),(3,7)]
 
 
--- using the in-built list monad, with do-notation (sugar!)
+-- using the list monad, with in-built "do-notation" syntax (sugar!)
 doily = do
   i <- [1..3]
   j <- [i+2 .. i+4]
@@ -142,21 +146,21 @@ doily = do
 -- >>> [(1,3),(1,4),(1,5),(2,4),(2,5),(2,6),(3,5),(3,6),(3,7)]
 
 
--- using our (~~>) operator, "fuzz" ...
+-- using our own operator (~~>), or "fuzz" ...
 fuzzily =
   [1..3] ~~> \i ->
     [i+2 .. i+4] ~~> \j ->
       (^~^) (i,j)
 -- (~~>), or "fuzz", threads a list into a function and gets a list back.
--- (^~^), or "return / pure / lift / wrap / whatever", takes a value e.g. (i,j)
--- and puts it into the context (in this case a list []), so [(i,j)]
+-- (^~^), or "grab / return / pure / wrap / whatever", grabs a value e.g. (i,j)
+-- and puts it into a context (in this case a list), e.g. (i,j) ==> [(i,j)]
 
 --
 -- >>> fuzzily
 -- >>> [(1,3),(1,4),(1,5),(2,4),(2,5),(2,6),(3,5),(3,6),(3,7)]
 
 
--- using the in-built list MONAD (ooh, scary!), with (>>=), or "bind"
+-- using the in-built list monad with (>>=), or "bind"
 scarily =
   [1..3] >>= \i ->
     [i+2 .. i+4] >>= \j ->
