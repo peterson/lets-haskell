@@ -20,26 +20,25 @@ atomicModifyIORef' :: IORef a -> (a -> (a, b)) -> IO b
 double :: Int -> Int
 double = (*2)
 
-doubleTuple :: Int -> (Int,())
-doubleTuple v = (double v,())
-
 updateRef :: IORef Int -> IO ()
 updateRef ref = do
   val <- readIORef ref
   writeIORef ref (double val)
 
+incrTuple :: Int -> (Int,())
+incrTuple v = (succ v,())
 
 modifyRef :: IORef Int -> IO ()
 modifyRef ref = do
-  modifyIORef ref double
+  modifyIORef ref succ -- increment
 
 modifyRef' :: IORef Int -> IO ()
 modifyRef' ref = do
-  modifyIORef' ref double -- strict!
+  modifyIORef' ref succ -- strict!
 
 atomicModifyRef' :: IORef Int -> IO ()
 atomicModifyRef' ref = do
-  atomicModifyIORef' ref doubleTuple -- strict!
+  atomicModifyIORef' ref incrTuple -- strict!
 
 
 main1 :: IO ()
@@ -71,7 +70,7 @@ main2 = do
   putStrLn $ "Value is: " ++ show val1
 
   -- mutate
-  replicateM_ 32 $ modifyRef ref -- non-strict, use modifyRef' for strict
+  replicateM_ 200000 $ modifyRef ref -- non-strict, use modifyRef' for strict
 
   -- read and display
   val2 <- readIORef ref -- RACE!
@@ -89,13 +88,14 @@ main3 = do
   putStrLn $ "Value is: " ++ show val1
 
   -- mutate
-  forkIO(replicateM_ 32 $ modifyRef ref) -- new thread!
+  forkIO(replicateM_ 200000 $ modifyRef' ref) -- new thread!
 
   -- read and display
   val2 <- readIORef ref -- RACE!
   putStrLn $ "Value is: " ++ show val2
 
 
+-- run 'main4' repeatedly .. note differing values of val2 !
 main4 = do
   -- initialise IORef with a value of 1
   ref <- newIORef (1 :: Int)
@@ -106,10 +106,10 @@ main4 = do
   putStrLn $ "Value is: " ++ show val1
 
   -- mutate
-  forkIO(replicateM_ 32 $ atomicModifyRef' ref) -- new thread!
+  forkIO(replicateM_ 200000 $ atomicModifyRef' ref) -- new thread!
 
   -- read and display
-  val2 <- readIORef ref -- no more race!
+  val2 <- readIORef ref -- BUT ... this still gets an incorrect result!
   putStrLn $ "Value is: " ++ show val2
 
   {-
@@ -126,7 +126,6 @@ main4 = do
   after any later IORef operations."
 
   -}
-
 
 --
 -- entry point
