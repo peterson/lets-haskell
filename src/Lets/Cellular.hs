@@ -29,11 +29,13 @@ instance Functor U where
 class Functor w => Comonad w where
   extend :: (w a -> b) -> w a -> w b
   extract :: w a -> a
+  duplicate :: w a -> w (w a)
 
 -- implement Comonad for U
 instance Comonad U where
   extract = extractU
   extend  = extendU
+  duplicate = duplicateU
 
 -- extract returns the current focus value 'v' from the comonad
 -- a.k.a. coreturn, or copure
@@ -85,8 +87,8 @@ test = rtest rule 20
 u = U (repeat False) True (repeat False)
 
 -- rule 110:
--- current pattern	         111	110	101	100	011	010	001	000
--- new state for center cell	0	   1	 1	 0	 1	 1	 1	 0
+-- current pattern           111 110 101 100 011 010 001 000
+-- new state for center cell  0   1   1   0   1   1   1   0
 --
 -- See: https://en.wikipedia.org/wiki/Rule_110
 
@@ -102,8 +104,8 @@ r110 = rtest rule110
 
 --
 -- rule 30:
--- current pattern	         111 110	101	100	011	010	001	000
--- new state for center cell	0	  0	   0	 1	 1	 1	 1	 0
+-- current pattern           111 110 101 100 011 010 001 000
+-- new state for center cell  0   0   0   1   1   1   1   0
 --
 -- See: https://en.wikipedia.org/wiki/Rule_30
 
@@ -119,8 +121,8 @@ r30  = rtest rule30
 --
 -- rule 90: (XOR)
 --
--- current pattern	         111	110	101	100	011	010	001	000
--- new state for center cell	0	   1	 0	 1	 1	 0	 1	 0
+-- current pattern           111 110 101 100 011 010 001 000
+-- new state for center cell  0   1   0   1   1   0   1   0
 --
 -- See: https://en.wikipedia.org/wiki/Rule_90
 
@@ -139,8 +141,8 @@ r90 = rtest rule90
 --
 -- rule 184:
 --
--- current pattern	         111 110 101 100 011 010	001	000
--- new state for center cell	1	  0	  1   1   1   0    0   0
+-- current pattern           111 110 101 100 011 010 001 000
+-- new state for center cell  1   0   1   1   1   0   0   0
 --
 -- See: https://en.wikipedia.org/wiki/Rule_184
 
