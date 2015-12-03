@@ -62,21 +62,21 @@ _1 = Lens get1 set1
 -- > :t get
 -- Lens a b -> a -> b
 --             ^^^^^^
---                |-- this is the signature of getT
+--                |-- this is the signature of get1
 --
 -- Breaking this down, 'get' expects a "lens", i.e. a (Lens a b), and an 'a', and returns
 -- a 'b'. Alternatively, if you only pass in the "lens", you are given the function,
--- i.e. getT :: a -> b, as expected. This is just partial application!
+-- i.e. get1 :: a -> b, as expected. This is just partial application!
 
 -- And what is the type of 'set' ?
 --
 -- > :t set
 -- Lens a b -> b -> a -> a
 --             ^^^^^^^^^^^
---                  |--  this is the signature of setT
+--                  |--  this is the signature of set1
 --
 -- Similarly, 'set' expects a "lens", 'b' and 'a' and returns an 'a'. If you
--- only pass in the "lens", you are given back the 'setT' function b -> a -> b,
+-- only pass in the "lens", you are given back the 'set1' function b -> a -> b,
 -- as expected. Again, partial application.
 
 --
@@ -101,7 +101,7 @@ _1 = Lens get1 set1
 -- Let's try using the lens!
 --
 -- the old way:
--- > getT (1,2)
+-- > get1 (1,2)
 -- > 1
 --
 -- the lens way:
@@ -111,14 +111,14 @@ _1 = Lens get1 set1
 -- Similarly, for set:
 --
 -- the old way:
--- setT 2 (1,2)
+-- set1 2 (1,2)
 -- > (2,2)
 --
 -- the lens way:
 -- set _1 2 (1,2)
 -- > (2,2)
 
--- So, the general "lens" works the same way as the getT and setT operations
+-- So, the general "lens" works the same way as the get1 and set1 operations
 -- we saw earlier. It's just a "wrappered" version of the set and get inside
 -- a type constructor called Lens.
 
@@ -132,7 +132,7 @@ _2 :: Lens (a,b) b
 
 --
 -- We can write our 'get' and 'set' functions directly, as anonomous
--- functions. (These serve the same role as getT and setT in the first
+-- functions. (These serve the same role as get1 and set1 in the first
 -- example!)
 
 _2 = Lens (\(_, y) -> y) (\y (x, _) -> (x, y))
