@@ -19,7 +19,9 @@ source-repository head
 
 
 library
-  exposed-modules:     Lets.Data,
+  exposed-modules:     Lets.Cellular,
+                       Lets.Comonad,
+                       Lets.Data,
                        Lets.Function,
                        Lets.Functor,
                        Lets.Go,
@@ -30,6 +32,7 @@ library
                        Lets.State.StateT,
                        Lets.STM,
                        Lets.TouchyFeelyFuzzy
+                       Lets.TupleLens
   -- other-modules:
   -- other-extensions:
   build-depends:       base >= 4.8 && < 4.9,
