@@ -169,6 +169,18 @@ _1_2 = _1 >- _2
 _2_1 = _2 >- _1
 _2_2 = _2 >- _2
 
+--
+-- Looking at the types is constructive ...
+--
+-- > :t _1_1
+-- _1_1 :: Lens ((c, b1), b) c
+--
+-- > :t _1_1
+-- _1_2 :: Lens ((a, c), b) c
+--
+-- These signatures show clearly which part of the structure the lens
+-- is focused upon!
+
 
 --
 -- Examples
@@ -192,3 +204,63 @@ _2_2 = _2 >- _2
 -- ((1,2),(0,4))
 -- > set _2_2 0 ((1,2),(3,4))
 --((1,2),(3,0))
+
+
+--
+-- Shortcut operators
+--
+
+(.~) :: Lens a b -> b -> a -> a
+(.~) = set
+infixr 4 .~
+
+(^.) :: a -> Lens a b -> b
+(^.) = flip get
+infixl 8 ^.
+
+--
+-- Examples
+--
+-- (^.) i.e. get
+--
+-- > (1,2) ^. _1
+-- 1
+--
+-- > (1,2) ^. _2
+-- 2
+--
+-- (.~) i.e. set
+-- > _1 .~ 4 $ (1,2)
+-- (4,2)
+--
+-- > _2 .~ 3 $ (1,3)
+-- > (1,3)
+
+
+--
+-- Mapping over a lens
+--
+
+-- over is 'fmap' for a lens
+over :: Lens a b -> (b -> b) -> a -> a
+over l f a = set l (f (get l a)) a
+(%~) = over
+infixr 4 %~
+
+
+--
+-- Examples
+--
+-- > _1 %~ (*2) $ (3,2)
+-- > (6,2)
+--
+-- > _2 %~ (*2) $ (3,2)
+-- > (3,4)
+--
+-- Looking at the types:
+--
+-- > :t (_1 %~)
+-- > (_1 %~) :: (b -> b) -> (b, b1) -> (b, b1)
+--              ^^^^^^^^    ^^^^^^^    ^^^^^^^
+--                  |          |----------|----- tuples
+--                  |-- the function 'f' to be mapped over the lens focus
