@@ -385,4 +385,4 @@ set_set_law l =
 --   - @PLT_Borat
 --   https://twitter.com/PLT_Borat/status/228009057670291456
 --
--- So now you know what is Lens ... I like! Hi 5!
+-- So now you know what is Lens ... I hope you like! Hi 5!!!
