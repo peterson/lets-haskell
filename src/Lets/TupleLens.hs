@@ -20,7 +20,8 @@ get1 (x, _) = x -- return the value x
 set1 :: x' -> (x, y) -> (x', y)
 set1 x' (_,y) = (x',y) -- overwrite the value x with value x'
 
--- example
+--
+-- Example
 --
 -- > get1 (1,2)
 -- 1
@@ -28,9 +29,25 @@ set1 x' (_,y) = (x',y) -- overwrite the value x with value x'
 -- > set1 2 (1,2)
 -- (2,2)
 
+--
+-- You could also do this using the standard functions 'fst' and 'snd'
+--
+-- Recall that:
+--
+-- fst :: (a, b) -> a
+-- snd :: (a, b) -> b
+--
+-- and (,) :: a -> b -> (a, b)
+
+get1' :: (a, b) -> a
+get1' = fst
+
+set1' :: a -> (a, b) -> (a, b)
+set1' = \s a -> (s, snd a)
+
 
 --
--- First Lens
+-- Our first lens
 --
 
 data Lens a b =
@@ -315,7 +332,7 @@ set_get_law l =
 
 -- 3. Set-Set law
 -- This law says if you overwrite the result of one set operation (s1) by
--- a second set operation (s2), only the result of last operation (s2) is
+-- a second set operation (s2), only the result of the last operation (s2) is
 -- preserved.
 
 set_set_law :: Eq a => Lens a b -> b -> b -> a -> Bool
@@ -348,7 +365,7 @@ set_set_law l =
 --
 -- that is, the update in s1 has now been overwritten by s2.
 --
--- Out set_set_law asserts that the end result is always equal to
+-- Our set_set_law asserts that the end result is always equal to
 -- just the second set operation (s2). This is why the RHS of the (==)
 -- comparison is 'set l s2 a' (i.e. the tuple resulting from applying
 -- the lens l and the value s2 to the the input a!). The value s1 is
