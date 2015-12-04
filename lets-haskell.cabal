@@ -31,8 +31,9 @@ library
                        Lets.State.MVar,
                        Lets.State.StateT,
                        Lets.STM,
-                       Lets.TouchyFeelyFuzzy
+                       Lets.TouchyFeelyFuzzy,
                        Lets.TupleLens
+
   -- other-modules:
   -- other-extensions:
   build-depends:       base >= 4.8 && < 4.9,

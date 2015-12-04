@@ -1,6 +1,6 @@
 {-
 
-A basic introduction to lenses using tuples, e.g. (1,2)
+A basic introduction to lens operations using tuples.
 
 See: https://www.fpcomplete.com/user/tel/lenses-from-scratch
 
@@ -264,3 +264,108 @@ infixr 4 %~
 --              ^^^^^^^^    ^^^^^^^    ^^^^^^^
 --                  |          |----------|----- tuples
 --                  |-- the function 'f' to be mapped over the lens focus
+
+
+
+--
+-- Lens laws
+--
+
+-- 1. Get-Set law
+-- This law says that changing the sub-part (via set) to exactly the original
+-- value (via get) is the same thing as doing nothing at all!
+
+get_set_law :: Eq a => Lens a b -> a -> Bool
+get_set_law l =
+  \a ->
+    set l (get l a) a == a
+
+--
+-- To test, put in a lens (e.g. _1) and a tuple, e.g. (1,2) and you will
+-- be returned a Bool (which should always be True).
+--
+-- > get_set_law _1 (3,2)
+-- True
+-- > get_set_law _1 (99,23)
+-- True
+-- > get_set_law _1 (1,2)
+-- True
+
+
+-- 2. Set-Get law
+-- This law says if you perform a set operation on a focus using a lens and then
+--  view / get the same location, you will see the value that was set (s).
+
+set_get_law :: Eq b => Lens a b -> b -> a -> Bool
+set_get_law l =
+  \s a ->
+    get l (set l s a) == s
+
+--
+-- To test, put in a lens e.g. _1, a new value e.g. 5 and a tuple e.g. (1,2)
+-- and you will be returned a Bool (which should always be True).
+--
+-- > set_get_law _1 5 (1,2)
+-- True
+-- > set_get_law _1 5 (3,2)
+-- True
+-- > set_get_law _1 5 (2,1)
+-- True
+
+
+-- 3. Set-Set law
+-- This law says if you overwrite the result of one set operation (s1) by
+-- a second set operation (s2), only the result of last operation (s2) is
+-- preserved.
+
+set_set_law :: Eq a => Lens a b -> b -> b -> a -> Bool
+set_set_law l =
+  \s1 s2 a ->
+    set l s2 (set l s1 a) == set l s2 a
+--  ^^^^^^^^ ^^^^^^^^^^^^
+--     |          |- first (inner) set operation (s1)
+--     |
+--     |- second (outer) set operation (s2)
+
+
+--
+-- To test, put in a lens e.g. _1, a first set value (s1) e.g. 12, a second
+-- set value (s2) e.g. 24, and a tuple, e.g. (1,2) and you will be returned
+-- a Bool (which should always be True).
+--
+-- > set_set_law _1 12 24 (1,2)
+-- True
+--
+-- What happened here? Let's break it down a bit ...
+--
+-- The first set operation (s1) produces a result like this:
+-- > _1 .~ 12 $ (1,2)
+-- (12,2)
+--
+-- The second set operation (s2) produces a result like this:
+-- > _1 .~ 24 $ (1,2)
+-- (24,2)
+--
+-- that is, the update in s1 has now been overwritten by s2.
+--
+-- Out set_set_law asserts that the end result is always equal to
+-- just the second set operation (s2). This is why the RHS of the (==)
+-- comparison is 'set l s2 a' (i.e. the tuple resulting from applying
+-- the lens l and the value s2 to the the input a!). The value s1 is
+-- simply thrown away.
+
+
+--
+-- For a deep dive on the relationship between the lens laws and
+-- a "costate comonad coalgebra", see here:
+--
+-- http://r6research.livejournal.com/23705.html
+--
+-- And for the last word:
+--
+-- "Costate Comonad Coalgebra is equivalent of Java's member variable
+-- update technology for Haskell"
+--   - @PLT_Borat
+--   https://twitter.com/PLT_Borat/status/228009057670291456
+--
+-- So now you know what is Lens ... I like! Hi 5!
